@@ -33,7 +33,7 @@
     "recoil": "^0.8.0"
   },
   "devDependencies": {
-    "@tailwindcss/aspect-ratio": "^0.6.0",
+    "@tailwindcss/aspect-ratio": "^0.5.9",
     "@types/lodash": "^4.14.197",
     "@types/node": "^20.4.2",
     "@types/react": "^18.2.7",
