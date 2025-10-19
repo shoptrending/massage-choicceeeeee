@@ -1,63 +1,123 @@
-# Next.js Framework Starter
+# Bookshop Demo
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/next-starter-template)
+Bookshop is a virtual online bookstore application through which you can find books of various categories and rate the books.
 
-<!-- dash-content-start -->
+You can perform CRUD operations such as viewing book details, adding and deleting ratings, editing book inventory, etc.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It's deployed on Cloudflare Workers as a [static website](https://developers.cloudflare.com/workers/static-assets/).
+> Powered by TiDB Cloud, Prisma and Vercel.
 
-This template uses [OpenNext](https://opennext.js.org/) via the [OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare), which works by taking the Next.js build output and transforming it, so that it can run in Cloudflare Workers.
+## 🔥 Visit Live Demo
 
-<!-- dash-content-end -->
+[👉 Click here to visit](https://tidb-prisma-vercel-demo.vercel.app/)
 
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
+![image](https://github.com/pingcap/tidb-prisma-vercel-demo/assets/56986964/2ef5fd7f-9023-45f4-b639-f4ba4ddec157)
+
+## Deploy on Vercel
+
+## 🧑‍🍳 Before We Start
+
+Create a [TiDB Cloud](https://tidbcloud.com/) account and get your free trial cluster.
+
+### 🚀 One Click Deploy
+
+You can click the button to quickly deploy this demo if already has an TiDB Cloud cluster.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?demo-title=TiDB%20Cloud%20Starter&demo-description=A%20bookstore%20demo%20built%20on%20TiDB%20Cloud%20and%20Next.js.&demo-url=https%3A%2F%2Ftidb-prisma-vercel-demo.vercel.app%2F&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F2HMASOQn8hQit2IFi2hK3j%2Fcfe7cc2aeba4b8f6760a3ea14c32f707%2Fscreenshot-20220902-160324_-_Chen_Zhen.png&project-name=TiDB%20Cloud%20Starter&repository-name=tidb-cloud-starter&repository-url=https%3A%2F%2Fgithub.com%2Fpingcap%2Ftidb-prisma-vercel-demo&from=templates&integration-ids=oac_coKBVWCXNjJnCEth1zzKoF1j)
+
+> Integration will guide you connect your TiDB Cloud cluster to Vercel.
+
+<details>
+  <summary><h3>Manually Deploy (Not recommended)</h3></summary>
+
+#### 1. Get connection details
+
+You can get the connection details by clicking the `Connect` button.
+
+![image](https://github.com/pingcap/tidb-prisma-vercel-demo/assets/56986964/86e5df8d-0d61-49ca-a1a8-d53f2a3f618c)
+
+Get `User` and `Host` field from the dialog.
+
+> Note: For importing initial data from local, you can set an Allow All traffic filter here by entering an IP address of `0.0.0.0/0`.
+
+![image](https://github.com/pingcap/tidb-prisma-vercel-demo/assets/56986964/8d32ed58-4edb-412f-8af8-0e1303cceed9)
+
+Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/bookshop`
+
+#### 2. Deploy on Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpingcap%2Ftidb-prisma-vercel-demo&repository-name=tidb-prisma-vercel-demo&env=DATABASE_URL&envDescription=TiDB%20Cloud%20connection%20string&envLink=https%3A%2F%2Fdocs.pingcap.com%2Ftidb%2Fdev%2Fdev-guide-build-cluster-in-cloud&project-name=tidb-prisma-vercel-demo)
+
+![image](https://user-images.githubusercontent.com/56986964/199161016-2d236629-bb6a-4e3c-a700-c0876523ca6a.png)
+
+</details>
+
+## Deploy on AWS Linux
+
+### Install git and nodejs pkgs
 
 ```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/next-starter-template
+sudo yum install -y git
+
+# Ref: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash;
+source ~/.bashrc;
+nvm install --lts;
+node -e "console.log('Running Node.js ' + process.version)"
 ```
 
-A live public deployment of this template is available at [https://next-starter-template.templates.workers.dev](https://next-starter-template.templates.workers.dev)
-
-## Getting Started
-
-First, run:
+### Clone the repository
 
 ```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
+git clone https://github.com/pingcap/tidb-prisma-vercel-demo.git;
+cd tidb-prisma-vercel-demo;
 ```
 
-Then run the development server (using the package manager of your choice):
+### Install dependencies
 
 ```bash
-npm run dev
+corepack enable;
+corepack yarn install;
+yarn;
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Connect to TiDB Cloud and create a database
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+mysql -h gateway01.us-west-2.prod.aws.tidbcloud.com -P 4000 -u user -p
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+mysql> create database tidb_labs_bookshop;
+```
 
-## Deploying To Production
+### Set environment variables
 
-| Command                           | Action                                       |
-| :-------------------------------- | :------------------------------------------- |
-| `npm run build`                   | Build your production site                   |
-| `npm run preview`                 | Preview your build locally, before deploying |
-| `npm run build && npm run deploy` | Deploy your production site to Cloudflare    |
-| `npm wrangler tail`               | View real-time logs for all Workers          |
+```bash
+export DATABASE_URL=mysql://user:pass@gateway01.us-west-2.prod.aws.tidbcloud.com:4000/tidb_labs_bookshop
+```
 
-## Learn More
+### Build the project
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+yarn run prisma:deploy && yarn run setup && yarn run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Start the server
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+yarn start
+```
+
+### Open the browser
+
+Open the browser and visit `http://<ip>:3000`.
+
+## 📖 Development Reference
+
+### Prisma
+
+[Prisma Deployment Guide](https://www.prisma.io/docs/guides/deployment/deploying-to-vercel)
+
+### Bookshop Schema
+
+[Bookshop Schema Design](https://docs.pingcap.com/tidbcloud/dev-guide-bookshop-schema-design)
